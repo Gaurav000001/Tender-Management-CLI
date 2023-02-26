@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.masai.Bean.Bidder;
 import com.masai.Bean.Tender;
+import com.masai.Bean.Vendor;
 import com.masai.Exception.BidNotFoundException;
 import com.masai.Exception.TenderNotFoundException;
 
@@ -15,14 +16,14 @@ public interface VendorDao {
 	 * @param password
 	 * @return String massage indicating whether user successfully logedin or not
 	 */
-	public String userLogin(String username, String password);
+	public boolean userLogin(String username, String password);
 	
 	
 	/**
 	 * 
 	 * @return List<Tender> which are open
 	 */
-	public List<Tender> getAllOpenTenders();
+	public List<Tender> getAllCurrentTenders();
 	
 	
 	/**
@@ -50,4 +51,26 @@ public interface VendorDao {
 	 * @return List<Bidder> indicating all the bid history of the logedIn user
 	 */
 	public List<Bidder> getBidHistory();
+	
+	
+	/**
+	 * Used to print the profile details of the LogedIn user
+	 */
+	public void printProfileDetails();
+	
+	
+	/**
+	 * Used to update the profile details of the LogedIn user
+	 * @return boolean
+	 * Indicating profile updated or not
+	 */
+	public boolean updateProfileDetails(Vendor vendor);
+	
+	
+	/**
+	 * Used to change the password of the LogedIn user
+	 * @return boolean
+	 * Indicating the status whether password is changed or not
+	 */
+	public boolean changePassword(String pass);
 }

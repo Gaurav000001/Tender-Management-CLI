@@ -7,11 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import com.masai.Bean.Bidder;
 import com.masai.Bean.BidderImpl;
 import com.masai.Bean.Tender;
+import com.masai.Bean.Vendor;
+import com.masai.Bean.VendorImpl;
 import com.masai.Dao.VendorDao;
 import com.masai.Exception.BidNotFoundException;
 import com.masai.Exception.TenderNotFoundException;
@@ -22,9 +25,8 @@ import com.masai.utility.LogedinUser;
 public class VendorDaoImpl implements VendorDao{
 
 	@Override
-	public String userLogin(String username, String password) {
+	public boolean userLogin(String username, String password) {
 		// TODO Auto-generated method stub
-		String message = "user name or password is wrong";
 		
 		try(Connection con = DBUtils.connectToDatabase()){
 			
@@ -36,11 +38,12 @@ public class VendorDaoImpl implements VendorDao{
 			ResultSet r = ps.executeQuery();
 			
 			if(AdministratorDaoImpl.isResultSetEmpty(r)) {
-				return message;
+				return false;
 			}
 			else {
+				r.next();
 				LogedinUser.v_Id = r.getInt("Vid");
-				message = "Welcome Again!";
+				LogedinUser.password = r.getString("password");
 			}
 			
 		} catch (SQLException e) {
@@ -49,15 +52,38 @@ public class VendorDaoImpl implements VendorDao{
 		}
 		
 		
-		return message;
+		return true;
 	}
 	
 	
 
 	@Override
-	public List<Tender> getAllOpenTenders() {
+	public List<Tender> getAllCurrentTenders() {
 		// TODO Auto-generated method stub
-		return null;
+		List<Tender> list = null;
+		int id = LogedinUser.v_Id;
+		
+		try(Connection con = DBUtils.connectToDatabase()){
+			
+			PreparedStatement ps = con.prepareStatement("SELECT t.* FROM Bidder b INNER JOIN Tender t ON b.Tender_id = t.Tid where Vendor_id = "+ id +" and Bid_status = 'Selected'");
+			
+			ResultSet r = ps.executeQuery();
+			
+			if(AdministratorDaoImpl.isResultSetEmpty(r)) {
+				return list;
+			}
+			else {
+				
+				list = AdministratorDaoImpl.getListOfTendersFromResultSet(r);
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 	
 	
@@ -80,13 +106,12 @@ public class VendorDaoImpl implements VendorDao{
 			}
 			
 			//checking for deadline of the tender
+			r.next();
 			LocalDate tender_deadline = LocalDate.parse(String.valueOf(r.getDate("tender_deadline")));
 			LocalDate current_date = LocalDate.now();
 			
-			Period diff = Period.between(tender_deadline, current_date);
-			
 			//If deadline is
-			if(diff.getDays() >= 0) {
+			if(ChronoUnit.DAYS.between(current_date, tender_deadline) >= 0) {
 				
 				ps = con.prepareStatement("SELECT Bid_id FROM Bidder WHERE Tender_id = ? AND Vendor_id = ?");
 				ps.setInt(1, IdNaming.extractIdNumber(bid.getTenderId()));
@@ -109,6 +134,7 @@ public class VendorDaoImpl implements VendorDao{
 					PreparedStatement p = con.prepareStatement("SELECT Bid_id FROM Bidder ORDER BY Bid_id DESC LIMIT 1");
 					ResultSet set = p.executeQuery();
 					
+					set.next();
 					int id = set.getInt("Bid_id");
 					
 					if(affected > 0) {
@@ -128,11 +154,13 @@ public class VendorDaoImpl implements VendorDao{
 					String bid_status = r.getString("Bid_status");
 					
 					System.out.println("Bid_id: "+ IdNaming.generateId(bid_id, "B") +"\nVendor_id: "+ IdNaming.generateId(vendor_id, "V")+"\nTender_id: "+ IdNaming.generateId(tender_id, "T") + "\nAmount: "+ bid_amount + "\nBid_Date: "+ bid_date + "\nStatus: " + bid_status);
+					
 					return "";
 				}
 			}
 			else {
 				if(r.getString("tender_status").equals("Open")) {
+					
 					int t_id = r.getInt("Tid");
 					
 					//closing the tender
@@ -148,6 +176,7 @@ public class VendorDaoImpl implements VendorDao{
 					//If result is empty means no one bided for this tender and we cannot do anything for that we have already closed the tender
 					if(!AdministratorDaoImpl.isResultSetEmpty(result)) {
 						
+						result.next();
 						int bid_id = result.getInt("Bid_id");
 						
 						//Selecting the best bider and changing the status to 'Selected'
@@ -189,9 +218,9 @@ public class VendorDaoImpl implements VendorDao{
 				return bidDetails;
 			}
 			else {
-				if(r.getInt("Vid") == LogedinUser.v_Id) {
+				r.next();
+				if(r.getInt("Vendor_id") == LogedinUser.v_Id) {
 					
-					r.next();
 					
 					int b_Id = r.getInt("Bid_id");
 					int v_Id = r.getInt("Vendor_id");
@@ -205,7 +234,7 @@ public class VendorDaoImpl implements VendorDao{
 				}
 				else {
 					
-					throw new BidNotFoundException("Alert!, You are trying to access details another Bidder");
+					throw new BidNotFoundException("Alert!, You are trying to access details of another Bidder");
 					
 				}
 			}	
@@ -244,6 +273,90 @@ public class VendorDaoImpl implements VendorDao{
 		}
 		
 		return list;
+	}
+	
+	
+	@Override
+	public void printProfileDetails() {
+		int id = LogedinUser.v_Id;
+		
+		try(Connection con = DBUtils.connectToDatabase()){
+			
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM Vendor WHERE Vid = ?");
+			ps.setInt(1, id);
+			
+			ResultSet r = ps.executeQuery();
+			r.next();
+			
+			String userId = IdNaming.generateId(r.getInt("Vid"), "V");
+			String name = r.getString("userName");
+			String email = r.getString("email");
+			String mobile = r.getString("mobileNumber");
+			String address = r.getString("address");
+			String company = r.getString("companyName");
+			
+			System.out.println("Here's your Profile details.");
+			System.out.println();
+			System.out.println("UserId: "+userId+"\nUsername: "+name+"\nEmail Id: "+email+"\nMobile no: "+mobile+"\nAddress: "+address+"\nCompany: "+company);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public boolean updateProfileDetails(Vendor vendor) {
+		int id = LogedinUser.v_Id;
+		
+		try(Connection con = DBUtils.connectToDatabase()){
+			
+			PreparedStatement ps = con.prepareStatement("UPDATE Vendor SET userName = ?, email = ?, mobileNumber = ?, address = ?, companyName = ? WHERE Vid = ?");
+			ps.setString(1, vendor.getUserName());
+			ps.setString(2, vendor.getEmail());
+			ps.setString(3, vendor.getMobileNumber());
+			ps.setString(4, vendor.getAddress());
+			ps.setString(5, vendor.getCompanyName());
+			ps.setInt(6, id);
+			
+			int affected = ps.executeUpdate();
+			
+			if(affected > 0) {
+				return true;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	
+	@Override
+	public boolean changePassword(String pass) {
+		int id = LogedinUser.v_Id;
+		
+		
+		try(Connection con = DBUtils.connectToDatabase()){
+			
+			PreparedStatement ps = con.prepareStatement("UPDATE Vendor SET password = ? WHERE Vid = ?");
+			ps.setString(1, pass);
+			ps.setInt(2, id);
+			
+			int affected = ps.executeUpdate();
+			
+			if(affected > 0) {
+				return true;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 
 }

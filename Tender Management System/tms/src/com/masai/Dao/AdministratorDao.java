@@ -62,7 +62,7 @@ public interface AdministratorDao {
 	 * @param tenderId String which is provided to Administrator while tender Creation
 	 * @return List<Bidder> All the Bidds of the given tender
 	 */
-	public List<Bidder> getAllBiddsOfThisTender(String tenderId);
+	public List<Bidder> getAllBiddsOfThisTender(String tenderId) throws TenderNotFoundException;
 	
 	
 	/**

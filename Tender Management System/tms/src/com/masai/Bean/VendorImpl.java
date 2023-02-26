@@ -45,7 +45,7 @@ public class VendorImpl implements Vendor{
 			this.password = password;
 		}
 		else {
-			throw new PasswordException("Please Enter password according to the rule");
+			throw new PasswordException("Weak Password! password should contain at least (1 Capital Letter, 1 Small Letter, 1 Special Character, 1 Integer)");
 		}
 		
 	}

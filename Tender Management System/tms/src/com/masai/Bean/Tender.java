@@ -16,9 +16,9 @@ public interface Tender {
 
 	public void setType(String type);
 
-	public double getPrice();
+	public int getPrice();
 
-	public void setPrice(double price);
+	public void setPrice(int price);
 
 	public String getDescription();
 

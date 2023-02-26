@@ -150,6 +150,7 @@ public class AdministratorDaoImpl implements AdministratorDao{
 			ps = con.prepareStatement("SELECT * FROM Tender ORDER BY Tid DESC LIMIT 1");
 			
 			ResultSet r = ps.executeQuery();
+			r.next();
 			int id = r.getInt("Tid");
 			
 			String tenderId = IdNaming.generateId(id, "T");
@@ -193,26 +194,38 @@ public class AdministratorDaoImpl implements AdministratorDao{
 	}
 
 	@Override
-	public List<Bidder> getAllBiddsOfThisTender(String tenderId) {
+	public List<Bidder> getAllBiddsOfThisTender(String tenderId) throws TenderNotFoundException{
 		// TODO Auto-generated method stub
 		Connection con = null;
 		List<Bidder> list = null;
 		con = DBUtils.connectToDatabase();
 		
 		try {
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM Bidder WHERE Tender_id = ?");
-			
 			int tender_id = IdNaming.extractIdNumber(tenderId);
 			
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM Tender WHERE Tid = ?");
 			ps.setInt(1, tender_id);
 			
-			ResultSet resultset = ps.executeQuery();
+			ResultSet re = ps.executeQuery();
 			
-			if(!isResultSetEmpty(resultset)) {
-				
-				list = getListOfBiddersFromResultSet(resultset);
-				
+			if(isResultSetEmpty(re)) {
+				throw new TenderNotFoundException("No Tender Found for TenderId = "+ tenderId +"");
 			}
+			else {
+				ps = con.prepareStatement("SELECT * FROM Bidder WHERE Tender_id = ?");
+				
+				ps.setInt(1, tender_id);
+				
+				ResultSet resultset = ps.executeQuery();
+				
+				if(!isResultSetEmpty(resultset)) {
+					
+					list = getListOfBiddersFromResultSet(resultset);
+					
+				}
+			}
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -289,6 +302,7 @@ public class AdministratorDaoImpl implements AdministratorDao{
 		}catch(SQLException ex) {
 			ex.printStackTrace();
 		}
+		
 		return str;
 	}
 	
@@ -364,11 +378,11 @@ public class AdministratorDaoImpl implements AdministratorDao{
 				String name = r.getString("tender_name");
 				String type = r.getString("tender_type");
 				String desc = r.getString("tender_desc");
-				double price = r.getInt("tender_price");
-				Date deadline = r.getDate("deadline");
+				int price = r.getInt("tender_price");
+				Date deadline = r.getDate("tender_deadline");
 				String location = r.getString("tender_location");
 				String status = r.getString("tender_status");
-				
+
 				list.add(new TenderImpl(id, name, type, price, desc, deadline, location, status));
 			}
 		} catch (SQLException e) {

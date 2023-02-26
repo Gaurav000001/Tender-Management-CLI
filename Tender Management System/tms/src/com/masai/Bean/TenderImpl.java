@@ -10,7 +10,7 @@ public class TenderImpl implements Tender {
 	private String tenderId;
 	private String name;
 	private String type;
-	private double price;
+	private int price;
 	private String description;
 	private LocalDate deadline;
 	private String location;
@@ -19,11 +19,11 @@ public class TenderImpl implements Tender {
 	public TenderImpl() {}
 	
 	//constructor to get details of Tender from database
-	public TenderImpl(int t_id, String name, String type, double price, String description, Date deadline,
+	public TenderImpl(int t_id, String name, String type, int price, String description, Date deadline,
 			String location, String status) {
 
 		int n = t_id;
-		this.tenderId = IdNaming.generateId( n, "T");
+		this.tenderId = IdNaming.generateId(n, "T");
 		this.name = name;
 		this.type = type;
 		this.price = price;
@@ -34,15 +34,14 @@ public class TenderImpl implements Tender {
 	}
 	
 	//constructor to get details from Administrator
-	public TenderImpl(String name, String type, double price, String description, String deadline,
-			String location, String status) {
+	public TenderImpl(String name, String type, int price, String description, String deadline,
+			String location) {
 		this.name = name;
 		this.type = type;
 		this.price = price;
 		this.description = description;
 		this.deadline = LocalDate.parse(deadline);
 		this.location = location;
-		this.status = status;
 	}
 	
 	public String getTenderId() {
@@ -69,11 +68,11 @@ public class TenderImpl implements Tender {
 		this.type = type;
 	}
 
-	public double getPrice() {
+	public int getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 

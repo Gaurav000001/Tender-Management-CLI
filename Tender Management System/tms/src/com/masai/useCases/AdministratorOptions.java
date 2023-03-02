@@ -9,6 +9,8 @@ import com.masai.Bean.TenderImpl;
 import com.masai.Bean.Vendor;
 import com.masai.Bean.VendorImpl;
 import com.masai.Dao.AdministratorDao;
+import com.masai.Dao.VendorDao;
+import com.masai.DaoImplementation.VendorDaoImpl;
 import com.masai.Exception.EmailException;
 import com.masai.Exception.MobileNumberException;
 import com.masai.Exception.PasswordException;
@@ -21,6 +23,7 @@ public class AdministratorOptions {
 	
 	public static void adminOperations(Scanner sc, AdministratorDao adm) {
 		AdministratorDao admin = adm;
+		VendorDao user = new VendorDaoImpl();
 		int choice = 0;
 		
 		do {
@@ -31,7 +34,9 @@ public class AdministratorOptions {
 			System.out.println("4. View all the Tenders");
 			System.out.println("5. View all the bids of a Tender");
 			System.out.println("6. Assign Tender to a Vendor");
-			System.out.println("7. Logout!");
+			System.out.println("7. Delete a Vendor");
+			System.out.println("8. Delete a Tender");
+			System.out.println("9. Logout!");
 			System.out.println("0. Exit");
 			System.out.println();
 			System.out.print("Enter your choice: ");
@@ -199,7 +204,7 @@ public class AdministratorOptions {
 				String vendor_id = sc.next();
 				
 				try {
-					admin.assignTenderToVendor(tender_id, vendor_id);
+					System.out.println(admin.assignTenderToVendor(tender_id, vendor_id));
 				} catch (TenderNotFoundException ex) {
 					// TODO Auto-generated catch block
 					System.err.println(ex.getLocalizedMessage());
@@ -212,6 +217,39 @@ public class AdministratorOptions {
 				
 			case 7:
 				
+				System.out.print("Enter Username of Vendor: ");
+				String username = sc.next();
+				
+				System.out.print("Enter password of Vendor: ");
+				String pass = sc.next();
+				
+				if(user.userLogin(username, pass)) {
+					
+					System.out.println(admin.deleteVendor());
+					
+				}
+				else {
+					System.err.println("\nusername or password is wrong");
+				}
+				
+				break;
+				
+			case 8:
+				
+				System.out.println("Enter Tender-ID: ");
+				String tenderID = sc.next();
+				
+				try {
+					admin.deleteTender(tenderID);
+				} catch (TenderNotFoundException ex) {
+					// TODO Auto-generated catch block
+					System.err.println(ex.getLocalizedMessage());
+				}
+				
+				break;
+				
+			case 9:
+				
 				Main.main(null);
 				
 				break;
@@ -223,7 +261,7 @@ public class AdministratorOptions {
 			}
 			
 			//forcing thread to sleep for 2 seconds
-			if(choice==1 || choice==2 || choice==3 || choice==4 || choice==5 || choice==6 || choice==7) {
+			if(choice>0 && choice<=9) {
 				try {
 					Thread.sleep(4000);
 				} catch (InterruptedException e) {

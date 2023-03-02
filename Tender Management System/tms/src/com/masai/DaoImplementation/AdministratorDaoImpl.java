@@ -22,6 +22,7 @@ import com.masai.Exception.UserNameException;
 import com.masai.Exception.VendorNotFoundException;
 import com.masai.utility.DBUtils;
 import com.masai.utility.IdNaming;
+import com.masai.utility.LogedinUser;
 
 public class AdministratorDaoImpl implements AdministratorDao{
 
@@ -252,7 +253,7 @@ public class AdministratorDaoImpl implements AdministratorDao{
 			ResultSet r = ps.executeQuery();
 			
 			if(isResultSetEmpty(r)) {
-				throw new TenderNotFoundException("No Tender Found for TenderId = "+ tenderId +"");
+				throw new TenderNotFoundException("No Tender Found for Tender-Id = "+ tenderId +"");
 			}
 			
 			ps = con.prepareStatement("SELECT * FROM Vendor WHERE Vid = ?");
@@ -261,7 +262,7 @@ public class AdministratorDaoImpl implements AdministratorDao{
 			r = ps.executeQuery();
 			
 			if(isResultSetEmpty(r)) {
-				throw new VendorNotFoundException("No vendor exists for TenderId = "+ vendorId +"");
+				throw new VendorNotFoundException("No vendor exists for Vendor-Id = "+ vendorId +"");
 			}
 			
 			
@@ -270,6 +271,8 @@ public class AdministratorDaoImpl implements AdministratorDao{
 			ps.setInt(1, t_id);
 			
 			ResultSet tender_info = ps.executeQuery();
+			
+			tender_info.next();
 			if(tender_info.getString("tender_status").equals("Closed")) {
 				return "Tender is already Closed! , cannot assign to any other vendor";
 			}
@@ -306,6 +309,78 @@ public class AdministratorDaoImpl implements AdministratorDao{
 		return str;
 	}
 	
+	
+	@Override
+	public String deleteVendor() {
+		int vendorId = LogedinUser.v_Id;
+		String message = "Something went wrong!";
+		
+		try(Connection con = DBUtils.connectToDatabase()){
+			
+			//deleting the vendor from vendor table
+			PreparedStatement ps = con.prepareStatement("DELETE FROM Vendor WHERE Vid = ?");
+			ps.setInt(1, vendorId);
+			
+			int vendorAffected = ps.executeUpdate();
+			
+			
+			if(vendorAffected > 0) {
+				//deleting all the bids of the vendor
+				ps = con.prepareStatement("DELETE FROM Bidder WHERE Vendor_id = ?");
+				ps.setInt(1, vendorId);
+				
+				ps.executeUpdate();
+				
+				message = "Vendor Deleted Successfully";
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return message;
+	}
+	
+	
+	@Override
+	public void deleteTender(String tenderId) throws TenderNotFoundException{
+		
+		int id = IdNaming.extractIdNumber(tenderId);
+		
+		try(Connection con = DBUtils.connectToDatabase()){
+			
+			PreparedStatement check = con.prepareStatement("SELECT * FROM Tender WHERE Tid = ?");
+			check.setInt(1, id);
+			
+			ResultSet r = check.executeQuery();
+			
+			if(isResultSetEmpty(r)) {
+				throw new TenderNotFoundException("Tender Not Exists, Plese check your Tender-ID");
+			}
+			
+			//deleting the vendor from vendor table
+			PreparedStatement ps = con.prepareStatement("DELETE FROM Tender WHERE Tid = ?");
+			ps.setInt(1, id);
+			
+			int tenderAffected = ps.executeUpdate();
+			
+			
+			if(tenderAffected > 0) {
+				//deleting all the bids of the vendor
+				ps = con.prepareStatement("DELETE FROM Bidder WHERE Tender_id = ?");
+				ps.setInt(1, id);
+				
+				ps.executeUpdate();
+				
+				System.out.println("Tender Deleted Successfully");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	
 	

@@ -74,4 +74,21 @@ public interface AdministratorDao {
 	 * @throws VendorNotFoundException
 	 */
 	public String assignTenderToVendor(String tenderId, String vendorId)  throws TenderNotFoundException, VendorNotFoundException;
+	
+	
+	/**
+	 * 
+	 * @return String 
+	 * Message of completion of vendor or not
+	 */
+	public String deleteVendor();
+	
+	
+	/**
+	 * 
+	 * @param tenderId of the tender to be deleted
+	 * @throws TenderNotFoundException
+	 * If Tender id is wrong
+	 */
+	public void deleteTender(String tenderId) throws TenderNotFoundException;
 }

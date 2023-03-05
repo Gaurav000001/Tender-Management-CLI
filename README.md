@@ -24,6 +24,7 @@ The application will be used by the two categories of users:
 
 - ## Administrator
 
+  - Create new Vendor
   - View all Vendors
   - Create new Tender
   - View all Tenders

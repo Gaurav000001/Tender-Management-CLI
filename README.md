@@ -54,17 +54,17 @@ The **Vendor** can view all current **Tenders** for which he/she got **Selected*
 ## Setting and Installation
 
 Install the Spring Tool Suite
-```
+```bash
 https://spring.io/tools
 ```
 
 Install MySQL Community Server
-```
+```bash
 https://dev.mysql.com/downloads/mysql/
 ```
 
 Clone the Project
-```
+```bash
 https://github.com/Gaurav000001/Tender-Management-API.git
 ```
 
@@ -73,40 +73,40 @@ https://github.com/Gaurav000001/Tender-Management-API.git
 
 
 Open MySQL Server
-```
+```bash
 Create a New Database in SQL: tms
 ```
 
 Go to the Project Directory & Open SQL Folder > SQL Tables
-```
+```bash
 Create The Same Tables in Your tms Database 
 ```
 
 ## Run Locally
 
 Go to the Project Directory
-```
+```Bash
 Open the `Tender Management System/tms` Folder With S.T.S 
 ```
 
 Go to Build Path > Libraries > Class_Path
-```
+```bash
 Add the Jar File Present in JDBC Driver As External Jar
 ```
 
 Go to utility Package > dbDetails.properties
-```
+```bash
 url jdbc:mysql://localhost:3306/tms
 username your-username
 password your-password
 ```
 
 Go to UI Package
-```
+```bash
 NOTE : Insert Data Into Database Either Through Application OR Through MySQL By Entering the Queries From SQL Queries  
 ```
 
-```
+```bash
 Run as Java Application !
 ```
 
@@ -124,4 +124,8 @@ Don't forget to give the project a star ! Thank You !
 
 - [Gaurav Ganguly](https://github.com/Gaurav000001)
 
-[Portfolio](https://img.shields.io/badge/Portfolio-%23000000.svg?style=for-the-badge&logo=firefox&logoColor=#FF7139)
+## Contact Me
+
+[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://Gaurav000001.github.io/)
+
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/gaurav-ganguly-bb7ba9246/)

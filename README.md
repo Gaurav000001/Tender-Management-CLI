@@ -23,8 +23,22 @@ The application will be used by the two categories of users:
 ## System Structure
 
 - ## Administrator
+
+  - View all Vendors
+  - Create new Tender
+  - View all Tenders
+  - View Bids of Tender
+  - Assign Tender to Vendor
+  - Delete Vendor
+  - Delete Tender
   
-  -
+ - ## Vendor
+
+    - Show Current Tenders
+    - Place Bid for Tender
+    - Show Bid History
+    - Update Profile
+    - Change Password
 
 * calm `yo` _ye_ __Ye__ **Ye** ***Ye*** **`you`**
 

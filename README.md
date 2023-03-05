@@ -10,9 +10,22 @@ The system allows for the `Creation` and `Management` of an empaneled list of **
 
 The application will be used by the two categories of users:
 
-- Administrator (Admin)
+- **Administrator (Admin)**
 
-- Vendor (Bidder / User)
+- **Vendor (Bidder / User)**
+
+## Tech Stack
+
+- Java
+- J.D.B.C.
+- MySql
+
+## System Structure
+
+- ## Administrator
+  
+  -
+
 * calm `yo` _ye_ __Ye__ **Ye** ***Ye*** **`you`**
 
 ## ye

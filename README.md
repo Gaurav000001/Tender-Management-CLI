@@ -94,3 +94,32 @@ Go to Build Path > Libraries > Class_Path
 Add the Jar File Present in JDBC Driver As External Jar
 ```
 
+Go to utility Package > dbDetails.properties
+```
+url jdbc:mysql://localhost:3306/tms
+username your-username
+password your-password
+```
+
+Go to UI Package
+```
+NOTE : Insert Data Into Database Either Through Application OR Through MySQL By Entering the Queries From SQL Queries  
+```
+
+```
+Run as Java Application !
+```
+
+## Contributions
+
+Contributions are always **Welcome** !
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are Greatly Appreciated.
+
+If you have a suggestion that would make this application better, Please fork the repo and create a pull request. You can also connect with me for further development of this application !
+
+Don't forget to give the project a star ! Thank You !
+
+## Authors
+
+- [Gaurav Ganguly](https://github.com/Gaurav000001)

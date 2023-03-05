@@ -4,7 +4,15 @@
 
 #### C.L.I BASED APPLICATION
 
-Tender Management System is designed to streamline the process of floating tenders and managing bids for a company.
+Tender Management System is designed to streamline the process of floating **Tenders** and managing **Bids** for a **Company**.
+
+The system allows for the `Creation` and `Management` of an empaneled list of **Vendors** who are eligible to **Bid** on **Tenders**.
+
+The application will be used by the two categories of users:
+
+- Administrator (Admin)
+
+- Vendor (Bidder / User)
 * calm `yo` _ye_ __Ye__ **Ye** ***Ye*** **`you`**
 
 ## ye

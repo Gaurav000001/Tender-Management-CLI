@@ -123,3 +123,5 @@ Don't forget to give the project a star ! Thank You !
 ## Authors
 
 - [Gaurav Ganguly](https://github.com/Gaurav000001)
+
+[Portfolio](https://img.shields.io/badge/Portfolio-%23000000.svg?style=for-the-badge&logo=firefox&logoColor=#FF7139)

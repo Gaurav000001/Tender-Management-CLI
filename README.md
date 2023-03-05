@@ -32,7 +32,7 @@ The **Vendor** can view all current **Tenders** for which he/she got **Selected*
 
 > A **Vendor** can **Bid** for a **Tender** only once.
 
-- ## Administrator
+- ### Administrator
 
   - Register new Vendor
   - View all Vendors
@@ -43,7 +43,7 @@ The **Vendor** can view all current **Tenders** for which he/she got **Selected*
   - Delete Vendor
   - Delete Tender
   
- - ## Vendor / Bidder
+ - ### Vendor / Bidder
 
     - Show Current Tenders
     - Place Bid for Tender

@@ -47,6 +47,34 @@ The **Vendor** can view all current **Tenders** for which he/she got **Selected*
     - Update Profile
     - Change Password
 
+## Setting and Installation
+
+Install the Spring Tool Suite
+```
+https://spring.io/tools
+```
+
+Install MySQL Community Server
+```
+https://dev.mysql.com/downloads/mysql/
+```
+
+Clone the Project
+```
+git clone https://github.com/TejasMedade/taboo-lock-5540
+```
+
+
+> ### Import the database attached above
+
+
+Open MySQL Server
+```
+Create a New Database in SQL: tms
+```
+
+
+
 * calm `yo` _ye_ __Ye__ **Ye** ***Ye*** **`you`**
 
 ## ye

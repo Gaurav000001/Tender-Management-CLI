@@ -22,9 +22,15 @@ The application will be used by the two categories of users:
 
 ## System Structure
 
+The **Administrator** is responsible for managing the system, including creating a new **Vendor**, Deleting a **Vendor**, Create new **Tender**, View all Tenders / Vendors, etc.
+
+The **Vendor** can view all current **Tenders** for which he/she got **Selected**, place **Bids**, View status of his/her Bid, View Bid **History**, `Update` Profile and `Change Password`.
+
+> A **Vendor** can **Bid** for a **Tender** only once.
+
 - ## Administrator
 
-  - Create new Vendor
+  - Register new Vendor
   - View all Vendors
   - Create new Tender
   - View all Tenders
@@ -33,7 +39,7 @@ The application will be used by the two categories of users:
   - Delete Vendor
   - Delete Tender
   
- - ## Vendor
+ - ## Vendor / Bidder
 
     - Show Current Tenders
     - Place Bid for Tender

@@ -1,3 +1,7 @@
+![GitHub top language](https://img.shields.io/github/languages/top/Gaurav000001/Tender-Management-API?color=yellow)
+![GitHub forks](https://img.shields.io/github/forks/Gaurav000001/Tender-Management-API?style=social)
+![GitHub Repo stars](https://img.shields.io/github/stars/Gaurav000001/Tender-Management-API?style=social)
+
 <img alt="coding banner" width="100%" src="https://github.com/Gaurav000001/Tender-Management-API/blob/main/Tender%20Cover%20Image.jpg">
 
 ## Tender Management System
@@ -61,7 +65,7 @@ https://dev.mysql.com/downloads/mysql/
 
 Clone the Project
 ```
-git clone https://github.com/TejasMedade/taboo-lock-5540
+https://github.com/Gaurav000001/Tender-Management-API.git
 ```
 
 
@@ -73,23 +77,20 @@ Open MySQL Server
 Create a New Database in SQL: tms
 ```
 
-
-
-* calm `yo` _ye_ __Ye__ **Ye** ***Ye*** **`you`**
-
-## ye
-
+Go to the Project Directory & Open SQL Folder > SQL Tables
 ```
-```
-$ no
-```
+Create The Same Tables in Your tms Database 
 ```
 
-## bol
+## Run Locally
 
->Yippe
+Go to the Project Directory
+```
+Open the `Tender Management System/tms` Folder With S.T.S 
+```
 
-## points
-- first
-  - second
-  - third
+Go to Build Path > Libraries > Class_Path
+```
+Add the Jar File Present in JDBC Driver As External Jar
+```
+

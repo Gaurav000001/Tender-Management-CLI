@@ -1,0 +1,139 @@
+Queries That will help You To Understand and Create Demo Data for running the application.
+
+
+
+**INSERTING DATA INTO VENDOR TABLE**
+
+INSERT INTO Vendor (userName, email, mobileNumber, address, companyName, password) VALUES ('Gaurav444', '7066457141',  'gangulygaurav166@gmail.com', 'India', 'Ganguly Enterprises', 'Ga123@');
+
+
+
+**GET BID ID OF LATEST VENDOR CREATED**
+
+SELECT Vid FROM Vendor ORDER BY Vid DESC LIMIT 1;
+
+
+
+**GET ALL VENDOR LIST**
+
+SELECT * FROM Vendor;
+
+
+
+**INSERTING ENTRY INTO TENDER**
+
+INSERT INTO Tender (tender_name, tender_type, tender_desc, tender_price, tender_deadline, tender_location) VALUES ('tender name', 'tender type', 'description',  2500000, '2023-11-03', 'Ahemdabad');
+
+
+
+**GET TENDER ID OF LATEST TENDER CREATED**
+
+SELECT * FROM Tender ORDER BY Tid DESC LIMIT 1;
+
+
+
+**GET ALL TENDERS**
+
+SELECT * FROM Tender;
+
+
+
+**GETTING ALL BIDS OF A SPECIFIC TENDER**
+
+SELECT * FROM Bidder WHERE Tender_id = ?;
+
+
+
+//Assigning tender to the vendor by updating the status of bid(Selected) and status of tender(Closed)
+
+UPDATE Bidder SET Bid_status = 'Selected' WHERE tender_id = ? and vendor_id = ?";
+
+
+
+//Closing the Tender after Selecting a Bid
+
+UPDATE Tender SET tender_status = 'Closed' WHERE Tid = ?;
+
+
+
+//Updating the status of every other Bids(Rejected) which are Pending after Selecting a Bid
+
+UPDATE Bidder SET Bid_status = 'Rejected' WHERE Tender_id = ? AND Bid_status = 'Pending';
+
+
+
+**DELETING A VENDOR**
+
+DELETE FROM Vendor WHERE Vid = ?;
+
+
+
+//Deleting the Bids made by the Vendor who is deleted above
+
+DELETE FROM Bidder WHERE Vendor_id = ?
+
+
+
+
+**DELETING A TENDER**
+
+DELETE FROM Tender WHERE Tid = ?
+
+
+
+//Deleting the Bids made by the Vendor who is deleted above
+
+DELETE FROM Bidder WHERE Tender_id = ?
+
+
+
+
+**PRINTING EVERY TENDER INFORMATION FOR WHICH VENDOR GOT SELECTED**
+
+SELECT t.* FROM Bidder b INNER JOIN Tender t ON b.Tender_id = t.Tid where Vendor_id = ? and Bid_status = 'Selected';
+
+
+
+
+**INSERT INTO BIDDER**
+
+INSERT INTO Bidder (Vendor_id, Tender_id, Bid_Amount, Bid_Date) VALUES (12, 3, 484744, CURDATE());
+
+
+
+
+**GETTING THE BID ID OF LAST BID ADDED**
+
+SELECT Bid_id FROM Bidder ORDER BY Bid_id DESC LIMIT 1;
+
+
+
+
+**GETTING INFORMATION ABOUT A BID PLACED**
+
+SELECT * FROM Bidder WHERE Bid_id = ?
+
+
+
+**GET BID HISTORY OF VENDOR**
+
+SELECT * FROM Bidder WHERE Vendor_id = ?
+
+
+
+
+**UPDATE PROFILE DETAILS OF A VENDOR**
+
+UPDATE Vendor SET userName = ?, email = ?, mobileNumber = ?, address = ?, companyName = ? WHERE Vid = ?;
+
+
+
+
+**CHANGE PASSWORD OF VENDOR**
+
+UPDATE Vendor SET password = ? WHERE Vid = ?;
+
+
+
+
+

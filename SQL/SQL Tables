@@ -1,0 +1,37 @@
+CREATE TABLE Tender(
+
+   Tid INT PRIMARY KEY AUTO_INCREMENT,
+   tender_name VARCHAR(30) NOT NULL,
+   tender_type VARCHAR(50) NOT NULL,
+   tender_desc VARCHAR(100),
+   tender_price INT NOT NULL,
+   tender_deadline DATE NOT NULL,
+   tender_location VARCHAR(30) NOT NULL,
+   tender_status VARCHAR(10) DEFAULT('Open')
+   
+);
+
+
+
+CREATE TABLE Vendor(
+
+   Vid INT PRIMARY KEY AUTO_INCREMENT,
+   userName VARCHAR(20) UNIQUE NOT NULL,
+   email VARCHAR(50) UNIQUE NOT NULL,
+   mobileNumber VARCHAR(10) UNIQUE NOT NULL,
+   address VARCHAR(30) NOT NULL,
+   companyName VARCHAR(30) NOT NULL,
+   password VARCHAR(20) NOT NULL
+    
+);
+
+
+
+CREATE TABLE Bidder(
+   Bid_id INT PRIMARY KEY AUTO_INCREMENT,
+   Vendor_id INT NOT NULL,
+   Tender_id INT NOT NULL,
+   Bid_Amount INT NOT NULL,
+   Bid_Date DATE NOT NULL,
+   Bid_status VARCHAR(10) DEFAULT('Pending')
+);

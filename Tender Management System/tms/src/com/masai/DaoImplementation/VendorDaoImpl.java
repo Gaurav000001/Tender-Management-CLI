@@ -359,6 +359,50 @@ public class VendorDaoImpl implements VendorDao{
 		return false;
 	}
 
+
+
+	@Override
+	public String deleteABid(String bidID) throws BidNotFoundException {
+		String msg = "Something Went Wrong";
+		
+		int id = IdNaming.extractIdNumber(bidID);
+		
+		try(Connection con = DBUtils.connectToDatabase()){
+			
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM Bidder WHERE Bid_id = "+ id +"");
+			
+			ResultSet r = ps.executeQuery();
+			
+			if(AdministratorDaoImpl.isResultSetEmpty(r)) {
+				throw new BidNotFoundException("Wrong Bid-ID Entered, Please check Bid-ID Entered");
+			}
+			else {
+				r.next();
+				int vendor_id = r.getInt("Vendor_id");
+				
+				if(vendor_id != LogedinUser.v_Id) {
+					throw new BidNotFoundException("You can't delete any other Vendor's Bid!!");
+				}
+			}
+			
+			ps = con.prepareStatement("DELETE FROM Bidder WHERE Bid_id = "+ id +"");
+			
+			int affected = ps.executeUpdate();
+			
+			if(affected > 0) {
+				msg = "Bid deleted Successfully";
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return msg;
+	}
+
 }
 
 

@@ -73,4 +73,16 @@ public interface VendorDao {
 	 * Indicating the status whether password is changed or not
 	 */
 	public boolean changePassword(String pass);
+	
+	
+	/**
+	 * 
+	 * @param bidID
+	 * Takes Bid ID of the Bid which user wants to delete
+	 * @return String 
+	 * Message
+	 * @throws BidNotFoundException
+	 * If Bid not Exists it will throw BidNotFoundException
+	 */
+	public String deleteABid(String bidID) throws BidNotFoundException;
 }

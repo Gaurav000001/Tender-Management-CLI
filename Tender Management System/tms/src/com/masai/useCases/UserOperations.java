@@ -33,6 +33,7 @@ public class UserOperations {
 			System.out.println("4. Show Bid History");
 			System.out.println("5. Update Profile");
 			System.out.println("6. Change Password");
+			System.out.println("7. Delete a Bid");
 			System.out.println("9. Logout!");
 			System.out.println("0. Exit");
 			
@@ -203,6 +204,24 @@ public class UserOperations {
 				}
 				else {
 					System.err.println("Wrong Password Entered!");
+				}
+				
+				break;
+				
+			case 7:
+				
+				System.out.println();
+				System.out.print("Enter Bid-ID: ");
+				String bidid = sc.next();
+				
+				try {
+					
+					System.out.println(user.deleteABid(bidid));
+					
+					
+				} catch (BidNotFoundException ex) {
+					// TODO Auto-generated catch block
+					System.err.println(ex.getLocalizedMessage());
 				}
 				
 				break;

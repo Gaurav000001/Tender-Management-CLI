@@ -48,6 +48,7 @@ The **Vendor** can view all current **Tenders** for which he/she got **Selected*
     - Show Current Tenders
     - Place Bid for Tender
     - Show Bid History
+    - Delete Bid
     - Update Profile
     - Change Password
 

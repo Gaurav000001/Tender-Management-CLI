@@ -55,6 +55,13 @@ The **Vendor** can view all current **Tenders** for which he/she got **Selected*
     - Delete Bid
     - Update Profile
     - Change Password
+  
+## Features
+
+- Open/Close Tender - Vendor
+- Bid for Open Tender - Bidder
+- Select the best bid and close the Tender - Administrator
+- Login/Logout as a Vendor, Bidder, or Administrator
 
 ## Setting and Installation
 
